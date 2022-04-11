@@ -20,6 +20,7 @@ import {
 } from '@adobe/react-native-aepedgeidentity';
 import styles from '../styles/styles';
 import {NavigationProps} from '../types/props';
+import { MobileCore } from '@adobe/react-native-aepcore';
 
 function updateIdentities() {
   var namespace1 = 'namespace1';
@@ -46,7 +47,9 @@ const EdgeIdentityView = ({navigation}: NavigationProps) => {
   const [identities, setIdentities] = useState('');
   const [ecid, setECID] = useState('');
   Identity.extensionVersion().then(version => setVersion(version));
-
+  function resetIdentities() {
+    MobileCore.resetIdentities();
+  }
   function getIdentities() {
     Identity.getIdentities()
       .then(currentIdentity => {
@@ -84,6 +87,7 @@ const EdgeIdentityView = ({navigation}: NavigationProps) => {
         <Button title="updateIdentities()" onPress={updateIdentities} />
         <Button title="removeIdentity()" onPress={removeIdentity} />
         <Button title="getIdentities()" onPress={getIdentities} />
+        <Button title="resetIdentities()" onPress={resetIdentities} />
         <View style={styles.breakLine} />
         <Text>{identities}</Text>
         <Text>{ecid}</Text>
